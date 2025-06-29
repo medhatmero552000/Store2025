@@ -1,27 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryRequest;
-use App\Http\Requests\createCategoryRequest;
+use App\Http\Requests\ProductRequest;
 use App\Models\Dashboard\Category;
-use GuzzleHttp\Psr7\Message;
+use App\Models\Dashboard\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Carbon;
 
-class CategoryController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = Category::paginate(PAGINATION_COUNT);
-        return view('dashboard.categories.index', get_defined_vars());
+        $data = Product::paginate(PAGINATION_COUNT);
+        return view('dashboard.products.index', get_defined_vars());
     }
 
     /**
@@ -30,44 +28,37 @@ class CategoryController extends Controller
     public function create()
     {
         $categories = Category::get();
-        return view('dashboard.categories.create', compact('categories'));
+        return view('dashboard.products.create', get_defined_vars());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(createCategoryRequest $request)
+    public function store(ProductRequest $request)
     {
-        // dd($request);
         try {
             DB::beginTransaction();
-
+            $data = $request->validated();
             $validated = $request->validated();
             $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
-            // رفع الصورة إن وُجدت
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $timestamp = Carbon::now()->format('Ymd_His');
                 $originalName = $image->getClientOriginalName();
                 $newImageName = $timestamp . '_' . $originalName;
 
-                // ❗ ده اللي بيحفظ الصورة في storage/app/public/uploads/category
-                $path = $image->storeAs('uploads/category', $newImageName, 'public');
-
-                // ❗ Laravel هيعرض الصورة من public/storage/...
+                $path = $image->storeAs('uploads/products', $newImageName, 'public');
                 $validated['image'] = 'storage/' . $path;
             }
 
-            Category::create($validated);
+            Product::create($validated);
             DB::commit();
-
             Alert::toast('تم إضافة القسم بنجاح', 'success');
-            return redirect()->route('admin.categories.index');
+            return redirect()->route('admin.products.index');
         } catch (\Throwable $th) {
-            //  return $th->getMessage();
             DB::rollBack();
-            Alert::toast('حدث خطأ، لم يتم حفظ القسم', 'error');
+            Alert::toast(' خطأ لم يتم حفظ القسم  ', 'error');
             return redirect()->back()->withInput();
         }
     }
@@ -85,28 +76,26 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $data = Category::findOrFail($id);
-        $data->makeVisible('translations');
-        return view('dashboard.categories.edit', get_defined_vars());
+        $data = Product::findOrFail($id);
+        $categories = Category::get();
+        return view('dashboard.products.edit', get_defined_vars());
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CategoryRequest $request, string $id)
+    public function update(ProductRequest $request, string $id)
     {
         try {
             DB::beginTransaction();
-
-            $category = Category::findOrFail($id);
+            $data = Product::findOrFail($id);
             $validated = $request->validated();
             $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
-            // تحديث الصورة إن وُجدت
-           if ($request->hasFile('image')) {
+            if ($request->hasFile('image')) {
                 // حذف الصورة القديمة إن وُجدت
-                if ($category->image && file_exists(public_path($category->image))) {
-                    unlink(public_path($category->image));
+                if ($data->image && file_exists(public_path($data->image))) {
+                    unlink(public_path($data->image));
                 }
 
                 // رفع الصورة الجديدة
@@ -116,22 +105,19 @@ class CategoryController extends Controller
                 $newImageName = $timestamp . '_' . $originalName;
 
                 // حفظ الصورة في مجلد محدد داخل storage
-             $path = $image->storeAs('uploads/category', $newImageName, 'public');
+                $path = $image->storeAs('uploads/products', $newImageName, 'public');
 
                 // تخزين المسار الجديد داخل قاعدة البيانات
                 $validated['image'] = 'storage/' . $path;
             }
 
-            $category->update($validated);
-
+            $data->update($validated);
             DB::commit();
-
             Alert::toast('تم تحديث البيانات بنجاح', 'success');
-            return redirect()->route('admin.categories.index');
+            return redirect()->route('admin.products.index');
         } catch (\Throwable $th) {
-            // return $th->getMessage();
             DB::rollBack();
-            Alert::toast('لم يتم التحديث', 'error');
+            Alert::toast('لم يتم التحديث  ', 'error');
             return redirect()->back();
         }
     }
@@ -143,22 +129,14 @@ class CategoryController extends Controller
     {
         try {
             DB::beginTransaction();
-
-            $category = Category::findOrFail($id);
-
-            // حذف الصورة المرتبطة
-            if ($category->image && file_exists(public_path($category->image))) {
-                unlink(public_path($category->image));
-            }
-
-            $category->delete();
+            $data = Product::findOrFail($id);
+            $data->delete();
             DB::commit();
-
-            Alert::toast('تم الحذف بنجاح', 'success');
-            return redirect()->route('admin.categories.index');
+            Alert::toast('تم الحذف  بنجاح', 'success');
+            return redirect()->route('admin.products.index');
         } catch (\Throwable $th) {
             DB::rollBack();
-            Alert::toast('لم يتم الحذف، تحقق من عدم وجود منتجات مرتبطة أولًا', 'error');
+            Alert::toast('لم يتم الحذف  ', 'error');
             return redirect()->back();
         }
     }

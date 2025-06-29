@@ -12,7 +12,6 @@
     </div>
     <div class="sidebar-body">
         <ul class="nav">
-            <li class="nav-item nav-category">Main</li>
             <li class="nav-item">
                 <a href="{{ route('admin.index') }}" class="nav-link">
                     <i class="link-icon" data-feather="home"></i>
@@ -25,6 +24,7 @@
                     aria-controls="emails">
                     <i class="link-icon" data-feather="sliders"></i>
                     <span class="link-title">الأقسام الرئيسية</span>
+                    <span class="m-2 badge bg-secondary">{{ App\Models\Dashboard\Category::count() }}</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
                 <div class="collapse" id="emails">
@@ -35,12 +35,35 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.categories.create') }}" class="nav-link">إضافة قسم جديد</a>
                         </li>
-                      
+
                     </ul>
                 </div>
             </li>
+
+           
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#x" role="button" aria-expanded="false"
+                        aria-controls="emails">
+                        <i class="link-icon" data-feather="shopping-bag"></i>
+                        <span class="link-title"> المنتجات</span>
+                        <i class="link-arrow" data-feather="chevron-down"></i>
+                    </a>
+                    <div class="collapse" id="x">
+                        <ul class="nav sub-menu">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.products.index') }}" class="nav-link">عرض المنتجات </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.products.create') }}" class="nav-link">إضافة منتج جديد</a>
+                            </li>
+
+    
+
+                        </ul>
+                    </div>
+                </li>
         
-        
+
             <li class="nav-item nav-category">الإعدادات </li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#uiComponents" role="button" aria-expanded="false"
@@ -69,16 +92,17 @@
                 <div class="collapse" id="advancedUI">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="{{ route('admin.setting.editshipping','free') }}" class="nav-link">توصيل مجانى</a>
+                            <a href="{{ route('admin.setting.editshipping', 'free') }}" class="nav-link">توصيل مجانى</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.setting.editshipping','local') }}" class="nav-link">توصيل داخلى</a>
+                            <a href="{{ route('admin.setting.editshipping', 'local') }}" class="nav-link">توصيل داخلى</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.setting.editshipping','outer') }}">توصيل خارجى</a>
+                            <a href="{{ route('admin.setting.editshipping', 'outer') }}">توصيل خارجى</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.setting.editshipping','international') }}" class="nav-link">توصيل دولى</a>
+                            <a href="{{ route('admin.setting.editshipping', 'international') }}"
+                                class="nav-link">توصيل دولى</a>
                         </li>
 
                     </ul>

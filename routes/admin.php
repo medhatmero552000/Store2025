@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard\AdminProfileController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\LoginController;
+use App\Http\Controllers\dashboard\ProductController;
 use App\Http\Controllers\Dashboard\ThemeController;
 
 // ✅ للمشرف المسجل دخوله
@@ -36,6 +37,20 @@ Route::middleware('auth:admin')->group(function () {
             'destroy' => 'categories.destroy',
         ]);
     }); // ← End categories Routes
+
+
+        // ✅ start Products Routes
+    Route::group(['prefix' => 'products'], function () {
+        Route::resource('products', ProductController::class)->names([
+            'index' => 'products.index',
+            'create' => 'products.create',
+            'store' => 'products.store',
+            'show' => 'products.show',
+            'edit' => 'products.edit',
+            'update' => 'products.update',
+            'destroy' => 'products.destroy',
+        ]);
+    }); // ← End Products Routes
 
 }); // ← ✅ قفلنا مجموعة middleware
 

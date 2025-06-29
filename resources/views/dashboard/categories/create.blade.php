@@ -45,9 +45,9 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="img" class="form-label">صورة القسم</label>
-                                    <input type="file" name="img" class="form-control">
-                                    <x-input-error :messages="$errors->get('img')" class="mt-2" />
+                                    <label for="image" class="form-label">صورة القسم</label>
+                                    <input type="file" name="image" class="form-control">
+                                    <x-input-error :messages="$errors->get('image')" class="mt-2" />
                                 </div>
                             </div>
 

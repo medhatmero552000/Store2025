@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('category_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('category_id')->unsigned();
+            $table->unsignedInteger('category_id');
             $table->string('locale');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->timestamps();
             $table->unique(['locale','category_id']);
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('catigory_translations');
+        Schema::dropIfExists('category_translations');
     }
 };
