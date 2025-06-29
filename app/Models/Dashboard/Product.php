@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Product extends Model
 {
     use HasFactory;
+ 
     use Translatable;
-    
+
     # -------------------- THE TABLE ASSOCIATED WITH THE MODEL ------------------- #
-    protected $table = 'categories';
+    protected $table = 'products';
     protected $with = ["translations"];
-//    protected $hidden = ['translations'];
     public $translatedAttributes = ['description', 'name'];
     # ----------------- THE ATTRIBUTES THAT ARE MASS ASSIGNNABLE ----------------- #
     protected $guarded = [];
@@ -30,10 +30,9 @@ class Category extends Model
     protected $casts = [
         //fields to cast
     ];
-
-    public function products()
+    public function category()
 {
-    return $this->hasMany(Product::class, 'category_id');
+    return $this->belongsTo(Category::class, 'category_id');
 }
 
 }

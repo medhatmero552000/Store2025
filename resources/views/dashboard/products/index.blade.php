@@ -12,7 +12,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="mb-4 card-title">
-                        <i data-feather="monitor"></i> عرض الأقسام الرئيسية
+                        <i data-feather="monitor"></i> عرض المنتجات
                     </h4>
 
                     <div class="row">
@@ -24,7 +24,10 @@
                                             <thead>
                                                 <tr>
                                                     <th>اسم القسم</th>
-                                                    <th> وصف القسم</th>
+                                                    <th>اسم المنتج</th>
+                                                    <th> وصف المنتج</th>
+                                                    <th> الكمية المتوفرة</th>
+                                                    <th> السعر</th>
 
                                                     <th>الحالة</th>
                                                     <th>الصورة</th>
@@ -35,8 +38,11 @@
                                                 @if ($data->count() > 0)
                                                     @foreach ($data as $i)
                                                         <tr>
+                                                            <td>{{ $i->category->name }}</td>
                                                             <td>{{ $i->name }}</td>
                                                             <td>{{ $i->description }}</td>
+                                                            <td>{{ $i->quantity }}</td>
+                                                            <td>{{ $i->price }}ج.م</td>
 
                                                             <td>
                                                                 @if ($i->is_active)
@@ -46,19 +52,20 @@
                                                                 @endif
                                                             </td>
                                                             <td>
-                                                                @if ($i->image)
-                                                                  <img src="{{ asset($i->image) }}" width="80" height="80" alt="صورة القسم">
 
+                                                                @if ($i->image)
+                                                                
+                                                                    <img src="{{ asset( $i->image) }}"
+                                                                        width="50" height="50" alt="صورة المنتج">
                                                                 @else
                                                                     <span>لا توجد صورة</span>
                                                                 @endif
                                                             </td>
-
                                                             <td>
-                                                                <a href="{{ route('admin.categories.edit', $i->id) }}"
+                                                                <a href="{{ route('admin.products.edit', $i->id) }}"
                                                                     class="btn btn-sm btn-primary">تعديل</a>
                                                                 <form
-                                                                    action="{{ route('admin.categories.destroy', $i->id) }}"
+                                                                    action="{{ route('admin.products.destroy', $i->id) }}"
                                                                     method="POST" style="display:inline-block;">
                                                                     @csrf
                                                                     @method('DELETE')

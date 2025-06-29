@@ -61,16 +61,19 @@ class Admin_panel_settings_Controller extends Controller
       try {
          DB::beginTransaction(); // بداية الترانزكشن
          $data = Setting::findOrFail($id);
+         // dd($id);
          $validated = $request->validated();
+         // dd($validated);
          $validated['is_active'] = $request->has('is_active') ? 1 : 0;
          $data->update($validated);
          DB::commit(); // حفظ التعديلات فعليًا
          Alert::toast('تم الحفظ بنجاح', 'success'); // 👈 توست ناجح
          return redirect()->back();
       } catch (\Exception $e) {
+         // dd($e->getMessage());
          DB::rollBack(); // تراجع عن أي تغيير
          Alert::toast('لم يتم الحفظ  ', 'error'); // 👈 توست ناجح
-         return redirect()->back();
+         return redirect()->withInput();
       }
    }
 }

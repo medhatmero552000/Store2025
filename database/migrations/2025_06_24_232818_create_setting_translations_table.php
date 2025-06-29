@@ -12,12 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('setting_translations', function (Blueprint $table) {
-         $table->increments('id');
+            $table->increments('id');
             $table->integer('setting_id')->unsigned();
             $table->string('locale');
-            // إضافة الأعمدة الخاصة بالترجمات
             $table->text('value');
-       
             $table->unique(['locale', 'setting_id']);
             $table->foreign('setting_id')->references('id')->on('settings')->onDelete('cascade');
         });
