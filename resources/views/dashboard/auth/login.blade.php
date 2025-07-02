@@ -53,8 +53,8 @@ License: For each use you must have a valid license purchased only from above li
         <div class="page-wrapper full-page">
             <div class="page-content d-flex align-items-center justify-content-center">
 
-                <div class="row w-100 mx-0 auth-page">
-                    <div class="col-md-8 col-xl-6 mx-auto">
+                <div class="mx-0 row w-100 auth-page">
+                    <div class="mx-auto col-md-8 col-xl-6">
                         <div class="card">
                             <div class="row">
                                 <div class="col-md-4 pe-md-0">
@@ -63,10 +63,10 @@ License: For each use you must have a valid license purchased only from above li
                                     </div>
                                 </div>
                                 <div class="col-md-8 ps-md-0">
-                                    <div class="auth-form-wrapper px-4 py-5">
+                                    <div class="px-4 py-5 auth-form-wrapper">
                                         <a href="#"
-                                            class="noble-ui-logo logo-light d-block mb-2">Noble<span>UI</span></a>
-                                        <h5 class="text-muted fw-normal mb-4">Welcome back! Log in to your account.</h5>
+                                            class="mb-2 noble-ui-logo logo-light d-block">Noble<span>UI</span></a>
+                                        <h5 class="mb-4 text-muted fw-normal">Welcome back! Log in to your account.</h5>
                                      @include('dashboard.alerts.error')
                                      @include('dashboard.alerts.success')
                                         <form class="forms-sample" method="post"
@@ -89,15 +89,15 @@ License: For each use you must have a valid license purchased only from above li
                                             <div class="block mt-4">
                                                 <label for="remember_me" class="inline-flex items-center">
                                                     <input id="remember_me" type="checkbox"
-                                                        class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                                                        class="text-indigo-600 border-gray-300 rounded shadow-sm focus:ring-indigo-500"
                                                         name="remember">
                                                     <span
-                                                        class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                                                        class="text-sm text-gray-600 ms-2">{{ __('keywords.rememberme') }}</span>
                                                 </label>
                                             </div>
 
                                             <x-primary-button class="ms-3">
-                                                {{ __('Log in') }}
+                                                {{ __('keywords.login') }}
                                             </x-primary-button>
                                     </div>
                                 </div>

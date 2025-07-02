@@ -13,6 +13,8 @@ class LoginController extends Controller
     {
         return view('dashboard.auth.login');
     }
+
+    
     public function postlogin(AdminLoginRequest $request)
     {
         $remember_me = $request->has('remember') ? true : false;

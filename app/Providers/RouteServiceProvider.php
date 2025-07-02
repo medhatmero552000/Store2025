@@ -36,8 +36,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/api.php'));
             /* ---------------------------- Admin file routes use multi langauge--------------------------- */
             Route::middleware(['web', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath'])
-                ->prefix(LaravelLocalization::setLocale() . '/admin')
-                ->as('admin.')
+                ->prefix(LaravelLocalization::setLocale())
+              
                 ->group(base_path('routes/admin.php'));
         });
     }

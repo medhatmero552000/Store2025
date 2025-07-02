@@ -3,7 +3,7 @@
 		<nav class="sidebar">
       <div class="sidebar-header">
         <a href="#" class="sidebar-brand">
-          Noble<span>UI</span>
+          future<span>school</span>
         </a>
         <div class="sidebar-toggler not-active">
           <span></span>
@@ -15,9 +15,9 @@
         <ul class="nav">
           <li class="nav-item nav-category">Main</li>
           <li class="nav-item">
-            <a href="dashboard.html" class="nav-link">
-              <i class="link-icon" data-feather="box"></i>
-              <span class="link-title">Dashboard</span>
+            <a href="{{ route('admin.index') }}" class="nav-link">
+              <i class="link-icon" data-feather="layout"></i>
+              <span class="link-title">{{ __('keywords.dashboard') }}</span>
             </a>
           </li>
           <li class="nav-item nav-category">web apps</li>
